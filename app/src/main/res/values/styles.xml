@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryAbasur</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAbasur</item>
+        <item name="colorAccent">@color/colorAccentAbasur</item>
+    </style>
+
+    <style name="ThemeAbasur" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryAbasur</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAbasur</item>
+        <item name="colorAccent">@color/colorAccentAbasur</item>
+    </style>
+
+    <style name="TextInputLayout" parent="ThemeAbasur">
+        <item name="hintTextAppearance">@style/TextAppearanceTextInputLayout</item>
+        <item name="errorTextAppearance">@style/errorAppearanceLogin</item>
+    </style>
+    <!-- Text Input Layout-->
+    <style name="TextAppearanceTextInputLayout" parent="ThemeAbasur">
+        <item name="android:textColorHint">@color/overlay_light_30</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="errorAppearanceLogin" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/overlay_light_30</item>>
+    </style>
+    <style name="ButtonEmphasis" parent="AppTheme.RoundedCornerMaterialButton">
+        <item name="android:background">@drawable/item_rounded_corner_material_button_green</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:textColor">@drawable/item_rounded_corner_material_button_textcolor</item>
+        <item name="elevation">@dimen/spacing_xsmall</item>
+    </style>
+    <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">145dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="minWidth">145dp</item>
+        <item name="android:paddingStart">@dimen/spacing_large</item>
+        <item name="android:paddingEnd">@dimen/spacing_large</item>
+        <item name="android:textSize">@dimen/text_size_baz_1</item>
+        <item name="android:inputType">textCapWords</item>
+        <item name="clickInterval">2</item>
+    </style>
+    <style name="Theme.App.Dialog.FullScreen" parent="ThemeAbasur">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+</resources>

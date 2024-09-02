@@ -1,3 +1,70 @@
 <resources>
     <string name="app_name">AsistenciaElectronica</string>
+
+    <!-- Commons -->
+    <string name="consultando_informacion">Consultando información \n Espere un momento...</string>
+    <string name="validacion_solo_texto">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="atencion">Atención</string>
+
+    <!-- Splash -->
+    <string name="derechos">Derechos de autor © CAVA CARGO, S.A. de C.V.</string>
+    <string name="todo">Imagen</string>
+
+    <!-- Login -->
+    <string name="msg_abasur_login">Delivery</string>
+    <string name="bienvenida">¡Bienvenido!</string>
+    <string name="dummy_nombre">Usuario\n</string>
+    <string name="error_numero_empleado">Ingresa un usuario </string>
+    <string name="error_contrasena_vacia">Ingresa tu contraseña</string>
+    <string name="error_longitud_contrasena">La contraseña debe tener al menos 4 caracteres </string>
+    <string name="error_confirma_contrasena">Captura correctamenta la confirmación</string>
+    <string name="error_confirmacion_erronea">La contraseña y la confirmación no coinciden</string>
+    <string name="error_password_incorrecto">La contraseña es incorrecta</string>
+    <string name="error_password_incorrecto_igual_empleado">La contraseña no puede ser igual a tu número de empleado.</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="entrar">Ingresar</string>
+
+    <!-- Reasignar equipo -->
+    <string name="equipo_se_reasigno_correctamente">El equipo se reasignó correctamente</string>
+    <string name="error_al_reasignar_equipo">Ocurrió un erorr al reasignar el equipo. Inténtalo nuevamente</string>
+    <string name="aceptar">Aceptar</string>
+
+    <!-- Configuración -->
+    <string name="configuracion">Configuración</string>
+    <string name="cambiar_contrasena">Cambiar Contraseña</string>
+    <string name="olvide_mi_contrasena">Olvidé mi contraseña</string>
+    <string name="reasignar_equipo">Reasignar equipo</string>
+    <string name="msg_nueva_version">Hay una nueva versión disponible \n Versión: %d</string>
+    <string name="cambiar_officina">Conexión Oficina</string>
+    <string name="message_oficina">La Aplicación funcionara con la Red interna de La oficina,\n\n para deshabilitar la función cierra y abre de nuevo la Aplicación.  </string>
+
+    <!-- Cambiar Contraseña -->
+    <string name="contrasena_actual">Contraseña Actual</string>
+    <string name="ingresa_tu_contrasena">Ingresa tu contraseña</string>
+    <string name="nueva_contrasena">Nueva contraseña</string>
+    <string name="ingresa_nueva_contrasena">Ingresa nueva contraseña</string>
+    <string name="confirma_tu_contrasena">Confirma tu contraseña</string>
+    <string name="confirma_contrasena">Confirma contraseña</string>
+    <string name="contrasena_actualizada">La contraseña se actualizó correctamente</string>
+    <string name="ingresa_contrasena_actual">Ingresa la contraseña actual</string>
+    <string name="contrasena_actual_incorrecta">La contraseña actual no es correcta</string>
+    <string name="contrasena_debe_contener_seis_digitos">La contraseña debe contener 6 dígitos</string>
+    <string name="contrasena_no_conincide_con_confirmacion">La contraseña no coincide con la confirmación, digíta nuevamente la información</string>
+    <string name="contrasena_dummy">XXXXXX</string>
+    <string name="continuar">Continuar</string>
+
+    <!-- Mensajes General -->
+    <string name="attention">Cargando información, Espere un momento. .</string>
+    <string name="message_title_attention">Atención</string>
+    <string name="message_title_message">Mensaje</string>
+    <string name="message_title_confirm">Confirmación</string>
+    <string name="message_error_null">No se pudo procesar tu solicitud.\n Intenta lo nuevamente</string>
+    <string name="x">X</string>
+    <string name="mensajeTest">Titulo</string>
+    <string name="textoTest">Mensaje de Prueba</string>
+    <string name="text_button_aceptar">Aceptar</string>
+    <string name="message_error_connection">No tienes conexión a internet. Verifica tu conexión</string>
+    <string name="actualizar_app">Para poder continuar es necesario que actualices tu Aplicación. </string>
+    <string name="texto_close_modulo">Se cerro correctamente</string>
 </resources>

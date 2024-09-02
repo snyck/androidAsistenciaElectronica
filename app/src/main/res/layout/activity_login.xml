@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLoginCover"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineimage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/finger_i" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="@dimen/corner_radius_small"
+            app:cardElevation="18dp"
+            app:cardUseCompatPadding="false"
+            app:layout_constraintEnd_toStartOf="@+id/guidelinecontentright"
+            app:layout_constraintStart_toStartOf="@+id/guidelinecontentleft"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineUserStar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewLoginSaludo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/bienvenida"
+                    android:textColor="@color/colorPrimaryDarkAbasur"
+                    android:textSize="@dimen/title_size_baz_1"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/inLoginIngreso"
+                    layout="@layout/item_login_ingreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@id/guidelinecontentright"
+                    app:layout_constraintStart_toStartOf="@id/guidelinecontentleft"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewLoginSaludo" />
+
+                <include
+                    android:id="@+id/inLoginEmpleado"
+                    layout="@layout/item_login_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@id/guidelinecontentright"
+                    app:layout_constraintStart_toStartOf="@id/guidelinecontentleft"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewLoginSaludo" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnLoginContinuar"
+                    style="@style/ButtonEmphasis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_mlarge"
+                    android:layout_marginBottom="@dimen/spacing_mlarge"
+                    android:text="@string/entrar" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewLoginConfiguracion"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="?colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@id/guidelinecontentbottom"
+            app:layout_constraintStart_toStartOf="@id/guidelinecontentleft"
+            app:srcCompat="@drawable/ic_settings" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLoginVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorPrimaryDark"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guidelinecontentbottom"
+            app:layout_constraintEnd_toEndOf="@+id/guidelinecontentright"
+            tools:text="Version: 1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelinecontentleft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@fraction/guide_left_vertical_margin_percent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelinecontentright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@fraction/guide_right_vertical_margin_percent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelinecontenttop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/guide_bottom_horizontal_margin_distance" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelinecontentbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/guide_bottom_horizontal_margin_distance" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineUserStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
