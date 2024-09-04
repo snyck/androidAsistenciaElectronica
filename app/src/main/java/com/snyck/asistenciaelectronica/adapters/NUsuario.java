@@ -2,8 +2,8 @@ package com.snyck.asistenciaelectronica.adapters;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.snyck.asistenciaelectronica.config.utils.UTJson;
-import com.snyck.asistenciaelectronica.config.utils.Utilities;
+import com.snyck.asistenciaelectronica.configuracion.utils.UTJson;
+import com.snyck.asistenciaelectronica.configuracion.utils.Utilities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ public class NUsuario implements Serializable {
     public int modificoGafete;
     public ArrayList<Integer> modulosCorreos;
     public int synchronise;
+    public NUsuarioMapas mapa;
     final String FILENAME = "DataUser.json";
 
     public NUsuario() {
@@ -62,6 +63,8 @@ public class NUsuario implements Serializable {
         connection = 0;
         synchronise = 0;
         modulosCorreos = new ArrayList<>();
+        // Mapa
+        this.mapa = new NUsuarioMapas();
     }
 
     public void update() {
@@ -95,6 +98,9 @@ public class NUsuario implements Serializable {
             ruta_fecha = UTJson.isJsonStringValideDefault(usuarioJson, "ruta_fecha", "");
             connection = UTJson.isJsonIntValideDefault(usuarioJson, "connection", 0);
             synchronise = UTJson.isJsonIntValideDefault(usuarioJson, "synchronise", 0);
+            // Mapa
+            JsonObject map = UTJson.isElementValide(usuarioJson, "mapa") ? usuarioJson.get("mapa").getAsJsonObject() : new JsonObject();
+            mapa.loadInfo(map);
         }
     }
 }

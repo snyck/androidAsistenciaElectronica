@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.snyck.asistenciaelectronica.R;
-import com.snyck.asistenciaelectronica.config.base.BaseActivity;
+import com.snyck.asistenciaelectronica.configuracion.base.BaseActivity;
 import com.snyck.asistenciaelectronica.databinding.ActivityScannBinding;
 import com.snyck.asistenciaelectronica.ui.finger.repository.ScanRepository;
 import com.snyck.asistenciaelectronica.ui.finger.viewmodel.ScanViewModel;
@@ -73,31 +73,31 @@ public class ScanActivity extends BaseActivity {
             binding.tvError.setText("");
             switch (status) {
                 case Status.INITIALISED:
-                    binding.tvStatus.setText("Setting up reader");
+                    binding.tvStatus.setText(R.string.finger_text_configuracion_del_lector);
                     break;
                 case Status.SCANNER_POWERED_ON:
-                    binding.tvStatus.setText("Reader powered on");
+                    binding.tvStatus.setText(R.string.finger_text_lector_encendido);
                     break;
                 case Status.READY_TO_SCAN:
-                    binding.tvStatus.setText("Ready to scan finger");
+                    binding.tvStatus.setText(R.string.finger_text_listo_para_escanear_el_dedo);
                     break;
                 case Status.FINGER_DETECTED:
-                    binding.tvStatus.setText("Finger detected");
+                    binding.tvStatus.setText(R.string.finger_text_dedo_detectado);
                     break;
                 case Status.RECEIVING_IMAGE:
-                    binding.tvStatus.setText("Receiving image");
+                    binding.tvStatus.setText(R.string.finger_text_recepci_n_de_imagen);
                     break;
                 case Status.FINGER_LIFTED:
-                    binding.tvStatus.setText("Finger has been lifted off reader");
+                    binding.tvStatus.setText(R.string.finger_text_se_ha_levantado_el_dedo_del_lector);
                     break;
                 case Status.SCANNER_POWERED_OFF:
-                    binding.tvStatus.setText("Reader is off");
+                    binding.tvStatus.setText(R.string.finger_text_el_lector_est_desactivado);
                     break;
                 case Status.SUCCESS:
-                    binding.tvStatus.setText("Fingerprint successfully captured");
+                    binding.tvStatus.setText(R.string.finger_text_huella_dactilar_capturada_con_xito);
                     break;
                 case Status.ERROR:
-                    binding.tvStatus.setText("Error");
+                    binding.tvStatus.setText(R.string.finger_text_error);
                     binding.tvError.setText(msg.getData().getString("errorMessage"));
                     break;
                 default:

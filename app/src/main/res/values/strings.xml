@@ -7,7 +7,7 @@
     <string name="atencion">Atención</string>
 
     <!-- Splash -->
-    <string name="derechos">Derechos de autor © CAVA CARGO, S.A. de C.V.</string>
+    <string name="derechos">Derechos de autor © Asistencia Electronica, S.A. de C.V.</string>
     <string name="todo">Imagen</string>
 
     <!-- Login -->
@@ -16,14 +16,16 @@
     <string name="dummy_nombre">Usuario\n</string>
     <string name="error_numero_empleado">Ingresa un usuario </string>
     <string name="error_contrasena_vacia">Ingresa tu contraseña</string>
-    <string name="error_longitud_contrasena">La contraseña debe tener al menos 4 caracteres </string>
+    <string name="error_longitud_contrasena">El Nº de Empleado debe tener al menos 4 caracteres </string>
     <string name="error_confirma_contrasena">Captura correctamenta la confirmación</string>
     <string name="error_confirmacion_erronea">La contraseña y la confirmación no coinciden</string>
     <string name="error_password_incorrecto">La contraseña es incorrecta</string>
+    <string name="error_servicio_incorrecto">Debes asignar el dispositivo aun Servicio</string>
     <string name="error_password_incorrecto_igual_empleado">La contraseña no puede ser igual a tu número de empleado.</string>
-    <string name="usuario">Usuario</string>
+    <string name="usuario">Nº Empleado</string>
     <string name="contrasena">Contraseña</string>
-    <string name="entrar">Ingresar</string>
+    <string name="huella">Huella Dactilar</string>
+    <string name="entrar">Asignar</string>
 
     <!-- Reasignar equipo -->
     <string name="equipo_se_reasigno_correctamente">El equipo se reasignó correctamente</string>
@@ -67,4 +69,20 @@
     <string name="message_error_connection">No tienes conexión a internet. Verifica tu conexión</string>
     <string name="actualizar_app">Para poder continuar es necesario que actualices tu Aplicación. </string>
     <string name="texto_close_modulo">Se cerro correctamente</string>
+
+    <!-- Mensajes Finger Reader -->
+    <string name="finger_text_configuracion_del_lector">Configuración del lector</string>
+    <string name="finger_text_lector_encendido">Lector encendido</string>
+    <string name="finger_text_listo_para_escanear_el_dedo">Listo para escanear el dedo</string>
+    <string name="finger_text_dedo_detectado">Dedo detectado</string>
+    <string name="finger_text_recepci_n_de_imagen">Recepción de imagen</string>
+    <string name="finger_text_se_ha_levantado_el_dedo_del_lector">Se ha levantado el dedo del lector</string>
+    <string name="finger_text_el_lector_est_desactivado">El lector está desactivado</string>
+    <string name="finger_text_huella_dactilar_capturada_con_xito">Huella dactilar capturada con éxito</string>
+    <string name="finger_text_error">Error</string>
+    <string name="item_texto_servicio">Servicio</string>
+
+    <!-- Spinner Servicio -->
+    <string name="title_spinner_cost_center_produccion">Servicios</string>
+    <string name="title_buton_spinner_cerrar">Cerrar</string>
 </resources>

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.snyck.asistenciaelectronica.config.base.BaseViewModel;
+import com.snyck.asistenciaelectronica.configuracion.base.BaseViewModel;
 import com.snyck.asistenciaelectronica.ui.finger.repository.ScanRepository;
 
 public class ScanViewModel extends BaseViewModel{

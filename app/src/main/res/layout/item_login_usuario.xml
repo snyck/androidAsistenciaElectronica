@@ -11,45 +11,14 @@
         android:layout_marginStart="@dimen/layout_marginBottom_8"
         android:paddingTop="@dimen/spacing_mlarge">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilLoginUsuario"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <include
+            android:id="@+id/include_item_spinner"
+            layout="@layout/item_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="?colorPrimaryDark"
-            android:layout_marginTop="5dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/cpfIngresoUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:hint="@string/usuario"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textColor="@color/grey_700"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilLoginContra"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textColorHint="?colorPrimaryDark"
-            app:passwordToggleDrawable="@drawable/toggle_pass"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/grey_500">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/cpfIngresoContra"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:hint="@string/contrasena"
-                android:inputType="textPassword|textCapCharacters"
-                android:textColor="@color/grey_700"/>
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includeItemDevolucion" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

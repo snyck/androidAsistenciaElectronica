@@ -1,5 +1,6 @@
 package asia.kanopi.uareu4500library;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -86,8 +88,11 @@ public class Fingerprint {
 
         } else {
             Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+            Intent intent = new Intent(ACTION_USB_PERMISSION);
+            intent.setPackage(context.getPackageName());
             PendingIntent mPermissionIntent = PendingIntent.getBroadcast(
-                    context, 0, new Intent(ACTION_USB_PERMISSION), 0);
+                    context, 0,intent ,PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
+
             if(!deviceRegistered){
                 IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
                 context.registerReceiver(mUsbReceiver, filter);

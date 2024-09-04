@@ -12,17 +12,19 @@ import androidx.lifecycle.ViewModelProvider;
 import com.auth0.android.jwt.JWT;
 import com.snyck.asistenciaelectronica.R;
 import com.snyck.asistenciaelectronica.adapters.Login;
-import com.snyck.asistenciaelectronica.config.Logg.Logg;
-import com.snyck.asistenciaelectronica.config.Singleton.NUsuarioSingleton;
-import com.snyck.asistenciaelectronica.config.base.BaseViewModel;
-import com.snyck.asistenciaelectronica.config.preferences.TokenSesionPreferences;
-import com.snyck.asistenciaelectronica.config.utils.Utilities;
+import com.snyck.asistenciaelectronica.configuracion.Logg.Logg;
+import com.snyck.asistenciaelectronica.configuracion.Singleton.NUsuarioSingleton;
+import com.snyck.asistenciaelectronica.configuracion.base.BaseViewModel;
+import com.snyck.asistenciaelectronica.configuracion.preferences.TokenSesionPreferences;
+import com.snyck.asistenciaelectronica.configuracion.utils.Utilities;
 import com.snyck.asistenciaelectronica.ui.login.models.LoginModels;
 import com.snyck.asistenciaelectronica.ui.login.repository.LoginRepository;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
@@ -32,14 +34,17 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginViewModel extends BaseViewModel {
 
     private static final String TAG = LoginViewModel.class.getSimpleName();
-    private static final int longitudPassword = 4;
+    private static final int longitudPassword = 3;
     private final LoginRepository repository;
     Login login = new Login();
     JSONObject jsonObject;
+    int i = 0;
+    ArrayList<String> arrayListSpinner = new ArrayList<>();
     private final MutableLiveData<Pair<Integer, LoginModels.LoginTipoDato>> detalleDatoLogin;
     private final MutableLiveData<LoginModels.LoginTipoAcceso> tipoLogin;
     private final MutableLiveData<LoginModels.LoginTipoAcceso> muestraInicio;
     private final MutableLiveData<Boolean> statusUsuario;
+    private MutableLiveData<ArrayList<String>> listaCostCenterSpinner;
 
     public LoginViewModel(LoginRepository repository) {
         this.repository = repository;
@@ -47,6 +52,7 @@ public class LoginViewModel extends BaseViewModel {
         this.statusUsuario = new MutableLiveData<Boolean>();
         this.muestraInicio = new MutableLiveData<>();
         this.detalleDatoLogin = new MutableLiveData<>();
+        this.listaCostCenterSpinner = new MutableLiveData<>();
     }
 
     public LiveData<Boolean> getExistenciaUsuario() {
@@ -72,17 +78,19 @@ public class LoginViewModel extends BaseViewModel {
     public void validaExistenciaEmpleado() {
         statusUsuario.setValue(repository.userEmpty());
     }
+    public LiveData<ArrayList<String>> getListaCostCenterRecycler() {
+        return listaCostCenterSpinner;
+    }
 
-    public void validarDatosLogin(String usuario, String contra, Context mContext) {
+    public void validarDatosLogin(String usuario,String costCenter, Context mContext) {
         switch (tipoLogin.getValue()) {
             case LoginTipoPrimerAcceso:
-                if (validaDatoLogin(usuario, LoginModels.LoginTipoDato.LoginTipoDatoEmpleadoUsuario) &&
-                        validaDatoLogin(contra, LoginModels.LoginTipoDato.LoginTipoDatoIngresoContrasenia))
-                    this.initSession(usuario, contra, tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoToken), mContext);
+                if (validaDatoLogin(costCenter, LoginModels.LoginTipoDato.LoginTipoDatoEmpleadoUsuario))
+                    this.initSession(costCenter, tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoToken), mContext);
                 break;
 
             case LoginTipoSegundoAcceso:
-                this.validaSession(mContext);
+                this.validaSession(usuario,mContext);
                 break;
         }
     }
@@ -97,15 +105,8 @@ public class LoginViewModel extends BaseViewModel {
                     succes = false;
                     break;
                 }
-                break;
-            case LoginTipoDatoIngresoContrasenia:
-                if (Utilities.isNullOrEmpty(campo)) {
-                    statusCampo = new Pair<>(R.string.error_contrasena_vacia, tipoDato);
-                    succes = false;
-                    break;
-                }
-                if (campo.length() < longitudPassword) {
-                    statusCampo = new Pair<>(R.string.error_longitud_contrasena, tipoDato);
+                if (campo.length() == 0) {
+                    statusCampo = new Pair<>(R.string.error_servicio_incorrecto, tipoDato);
                     succes = false;
                     break;
                 }
@@ -118,32 +119,25 @@ public class LoginViewModel extends BaseViewModel {
         return succes;
     }
 
-    private void validaSession(Context mContext) {
+    private void validaSession(String costCenter, Context mContext) {
         if (Utilities.getJWT(tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoTokenAuth))) {
-            initSession(tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoUser),
-                    tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoPass),
-                    tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoToken), mContext);
+            initSession(costCenter, tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoToken), mContext);
         } else {
-            if (NUsuarioSingleton.getNUsuario().cargo_ruta == 1){
-                muestraInicio.setValue(tipoLogin.getValue());
-            }else {
-                getSuc(tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoUser),
-                        tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoTokenAuth),
-                        tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoToken));
-            }
+            getSuc(costCenter,tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoTokenAuth),
+                    tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoToken));
         }
     }
 
-    private void initSession(String usuario, String contra, String token, Context mContext) {
+    private void initSession(String usuario, String token, Context mContext) {
         loader.setValue(true);
         compositeDisposable.add(Single.create((SingleOnSubscribe<String>) emitter ->
-                        emitter.onSuccess(repository.getLogin(usuario, contra, token)))
+                        emitter.onSuccess(repository.getLogin(usuario, token, mContext)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                             loader.setValue(false);
                             if (!result.isEmpty()) {
-                                validateTypeLogin(result, usuario, contra, mContext);
+                                validateTypeLogin(result, usuario, mContext);
                             } else {
                                 alert.setValue("No se cuenta con cobertura para realizar la operación");
                             }
@@ -154,7 +148,7 @@ public class LoginViewModel extends BaseViewModel {
                         }));
     }
 
-    private void validateTypeLogin(String result, String usuario, String contra, Context mContext) throws JSONException {
+    private void validateTypeLogin(String result, String usuario, Context mContext) throws JSONException {
         jsonObject = new JSONObject(result);
         JSONArray jsonArray = jsonObject.getJSONArray("result");
         jsonObject = jsonArray.getJSONObject(0);
@@ -162,32 +156,17 @@ public class LoginViewModel extends BaseViewModel {
         String message = login.setMessage(jsonObject.optString("message"));
 
         if (code_response == 200) {
-            String id = String.valueOf(login.setUserId(jsonObject.optInt("id_user")));
-            int role = login.setRol(jsonObject.optInt("role"));
             String tokenAuth = login.setToken_access(jsonObject.optString("token"));
-            String tokenSesion = login.setTokenSesion(jsonObject.optString("tokenSesion"));
+            String tokenSesion = login.setTokenSesion(jsonObject.optString("tokenSession"));
 
             TokenSesionPreferences tokenSesionPreferences = new TokenSesionPreferences(mContext);
 
             tokenSesionPreferences.guardaUserSession(usuario);
-            tokenSesionPreferences.guardaPassSession(contra);
             tokenSesionPreferences.guardaTokenAuth(tokenAuth);
             tokenSesionPreferences.guardaToken(tokenSesion);
+            NUsuarioSingleton.getNUsuario().userID = usuario;
 
-            NUsuarioSingleton.getNUsuario().userID = id;
-            NUsuarioSingleton.getNUsuario().userName = usuario;
-            NUsuarioSingleton.getNUsuario().userPass = Utilities.getBase64(contra);
-            NUsuarioSingleton.getNUsuario().userRole = role;
-
-            JWT jwtNew = new JWT(tokenAuth);
-
-            NUsuarioSingleton.getNUsuario().nameUser = jwtNew.getClaim("name").asString();
-            NUsuarioSingleton.getNUsuario().n_licencia = jwtNew.getClaim("n_licencia").asString();
-            NUsuarioSingleton.getNUsuario().nameRole = jwtNew.getClaim("role").asString();
-            NUsuarioSingleton.getNUsuario().pathFirmaAuditor = jwtNew.getClaim("imagen_firma").asString();
-            NUsuarioSingleton.getNUsuario().pathProfileAuditor = jwtNew.getClaim("imagen_perfil").asString();
-            NUsuarioSingleton.getNUsuario().modificoGafete = jwtNew.getClaim("actualizado").asInt();
-            NUsuarioSingleton.getNUsuario().connection = 1;
+            //JWT jwtNew = new JWT(tokenAuth);
 
             NUsuarioSingleton.update();
             muestraInicio.setValue(tipoLogin.getValue());
@@ -240,10 +219,6 @@ public class LoginViewModel extends BaseViewModel {
         }
     }
 
-    public String getNombreAuditor() {
-        return repository.getNombreAuditor();
-    }
-
     private String tokenAuth(Context mContext, LoginModels.LoginTipoDato tipoDato) {
         String result = null;
         TokenSesionPreferences tokenSesionPreferences = new TokenSesionPreferences(mContext);
@@ -255,16 +230,84 @@ public class LoginViewModel extends BaseViewModel {
             case LoginTipoDatoTokenAuth:
                 result = tokenSesionPreferences.getTokenAuth();
                 break;
-
-            case LoginTipoDatoUser:
-                result = tokenSesionPreferences.getUserSession();
-                break;
-
-            case LoginTipoDatoPass:
-                result = tokenSesionPreferences.getPassSession();
-                break;
         }
         return result;
+    }
+
+    public void costCenter() {
+        loader.setValue(true);
+        compositeDisposable.add(Single.create((SingleOnSubscribe<String>) emitter ->
+                        emitter.onSuccess(repository.getCostCenterActive()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            loader.setValue(false);
+                            try {
+                                if (!result.isEmpty()) {
+                                    validateCostCenter(result);
+                                } else {
+                                    alert.setValue("No se cuenta con cobertura para realizar la operación");
+                                }
+                            } catch (Exception e) {
+                                loader.setValue(false);
+                                Logg.e(TAG, "Error LoginViewModel Exception ." + e.getMessage());
+                            }
+                        },
+                        throwable -> {
+                            loader.setValue(false);
+                            Logg.e(TAG, "Error LoginViewModel.");
+                            alert.setValue(throwable.getMessage());
+                        }));
+    }
+
+    private void validateCostCenter(String result) throws JSONException {
+        jsonObject = new JSONObject(result);
+        JSONArray spinnerArray = jsonObject.getJSONArray("result");
+        jsonObject = spinnerArray.getJSONObject(0);
+        int code = jsonObject.optInt("code");
+        if (code == 200){
+            JSONArray itemSpinnerArray = jsonObject.getJSONArray("costCenter");
+            itemSpinnerArray.getJSONObject(0);
+            for (i = 0; i < itemSpinnerArray.length(); i++) {
+                JSONObject listSpinner = itemSpinnerArray.getJSONObject(i);
+
+                String codigo_producto = listSpinner.getString("id");
+                String nombre = listSpinner.getString("nombre");
+
+                arrayListSpinner.add(codigo_producto+ "- " +nombre);
+            }
+        }
+        listaCostCenterSpinner.setValue(arrayListSpinner);
+    }
+
+    public boolean validaCostCenter() {
+        return  repository.checkCostCenter();
+    }
+
+    public void validaServiceFinger(byte[] img,Context mContext) {
+        loader.setValue(true);
+        compositeDisposable.add(Single.create((SingleOnSubscribe<String>) emitter ->
+                        emitter.onSuccess(repository.getFingerService(img,tokenAuth(mContext, LoginModels.LoginTipoDato.LoginTipoDatoTokenAuth))))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            loader.setValue(false);
+                            try {
+                                if (!result.isEmpty()) {
+                                    validateTypeLoginActive(result);
+                                } else {
+                                    alert.setValue("No se cuenta con cobertura para realizar la operación");
+                                }
+                            } catch (Exception e) {
+                                loader.setValue(false);
+                                Logg.e(TAG, "Error LoginViewModel Exception ." + e.getMessage());
+                            }
+                        },
+                        throwable -> {
+                            loader.setValue(false);
+                            Logg.e(TAG, "Error LoginViewModel.");
+                            alert.setValue(throwable.getMessage());
+                        }));
     }
 
     public static class Factory implements ViewModelProvider.Factory {

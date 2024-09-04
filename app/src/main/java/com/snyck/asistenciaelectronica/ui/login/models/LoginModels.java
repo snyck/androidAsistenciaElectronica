@@ -11,7 +11,6 @@ public class LoginModels {
         LoginTipoDatoEmpleadoUsuario,
         LoginTipoDatoIngresoContrasenia,
         LoginTipoDatoUser,
-        LoginTipoDatoPass,
         LoginTipoDatoTokenAuth,
         LoginTipoDatoToken
     }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.splash.views.splash">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/inContentSplash"
+            layout="@layout/item_splash_image" />
+
+        <include
+            android:id="@+id/inContentVersion"
+            layout="@layout/item_splash_version_app" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

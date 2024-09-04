@@ -9,17 +9,24 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/spacing_mlarge">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNombre"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLoginUsuario"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_medium"
-            android:gravity="center"
-            android:lineSpacingExtra="@dimen/spacing_xmedium"
-            android:textColor="@color/colorPrimaryDarkAbasur"
-            android:textSize="@dimen/special_size_baz_3"
-            android:textStyle="bold|italic"
-            tools:text="@string/dummy_nombre" />
+            android:layout_marginTop="5dp"
+            android:textColorHint="?colorPrimaryDark">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cpfIngresoUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:hint="@string/usuario"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/grey_700" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
