@@ -102,6 +102,39 @@ public class BaseCommunication {
         }
     }
 
+    /**
+     * Realiza una petición POST
+     *
+     * @param contextUrl    method Controller
+     * @param method        method para el servicio
+     * @param params        Parameters para el servicio
+     * @param authorization Parameters para autorizar
+     * @return true Si el servicio se consume con éxito. false Para cualquier otro caso.
+     */
+    protected boolean responsePostParamAuthJava(String contextUrl, String method, JsonObject params, String authorization) throws JSONException {
+        if (!checkConnection()) {
+            errorConexion("Error de conexión, No se cuenta con cobertura para realizar la operación");
+            return false;
+        }
+        requestManager = SingletonRetrofit.getInstanceJava(contextUrl);
+        Call<ResponseBody> call = requestManager.postResponseParamsPathAuthorization(authorization,method,params);
+        try {
+            Response<ResponseBody> bodyResponse = call.execute();
+            if (bodyResponse.isSuccessful() || bodyResponse.code() == 403) {
+                String jsonString = bodyResponse.body().string();
+                json = JsonParser.parseString(jsonString).getAsJsonObject();
+                return true;
+            } else return false;
+        } catch (IOException e) {
+            errorConexion("No se cuenta con cobertura para realizar la operación");
+            Logg.e(TAG, "Error IOException - responsePost - " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            errorConexion("Error al consultar el servicio");
+            Logg.e(TAG, "Error IOException - responsePost - " + e.getMessage());
+            return false;
+        }
+    }
     protected boolean responsePostAuth(String contextUrl, String method, String authorization) {
         if (!checkConnection()) {
             errorConexion("No se cuenta con cobertura para realizar la operación");

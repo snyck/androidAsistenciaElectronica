@@ -6,7 +6,9 @@ import static com.snyck.asistenciaelectronica.BuildConfig.VERSION_CODE;
 import android.content.Context;
 
 import com.google.gson.JsonObject;
+import com.snyck.asistenciaelectronica.configuracion.Logg.Test;
 import com.snyck.asistenciaelectronica.configuracion.Services.BaseCommunication;
+import com.snyck.asistenciaelectronica.configuracion.crypto.cryptAEs;
 import com.snyck.asistenciaelectronica.configuracion.utils.Utilities;
 import com.snyck.asistenciaelectronica.ui.login.models.LoginModels;
 import com.snyck.asistenciaelectronica.configuracion.Singleton.NUsuarioSingleton;
@@ -31,7 +33,7 @@ public class LoginRepository extends BaseCommunication {
     }
 
     public String getLogin(String usuario, String token, Context mContext) throws JSONException {
-        String contextUrl = "login/";
+        String contextUrl = "/apiHuellas/login/";
 
         JsonObject petition = new JsonObject();
         petition.addProperty("cost_center", Utilities.getBase64(usuario));
@@ -46,7 +48,7 @@ public class LoginRepository extends BaseCommunication {
     }
 
     public String getLoginActive(String usuario,String tokenAuth, String TokenSesion) throws JSONException {
-        String contextUrl = "login/";
+        String contextUrl = "/apiHuellas/login/";
 
         String aut = PREFIJO + " " + tokenAuth;
 
@@ -62,7 +64,7 @@ public class LoginRepository extends BaseCommunication {
     }
 
     public String getCostCenterActive() {
-        String contextUrl = "catalogo/";
+        String contextUrl = "/apiHuellas/catalogo/";
         Map<String, String> parameter = new HashMap<>();
         parameter.put("cost_center", "1");
 
@@ -70,19 +72,23 @@ public class LoginRepository extends BaseCommunication {
     }
 
     public boolean checkCostCenter() {
-        return NUsuarioSingleton.getNUsuario().userID.isEmpty();
+        return !NUsuarioSingleton.getNUsuario().userID.isEmpty();
     }
 
     public String getFingerService(byte[] img, String tokenAuth) throws JSONException {
-        String contextUrl = "login/";
+
+        Test.setDebug(false);
+
+        String contextUrl = ":8991/asistencia/";
 
         String aut = PREFIJO + " " + tokenAuth;
 
         JsonObject petition = new JsonObject();
-        petition.addProperty("user_app",Utilities.getBase64(""));
+        petition.addProperty("id",7);
+        petition.addProperty("finger", cryptAEs.encryptAES(Utilities.getBase64(String.valueOf(img))));
         petition.addProperty("cost_center_app",Utilities.getBase64(NUsuarioSingleton.getNUsuario().userID));
 
-        if(responsePostParamAuth(contextUrl,"auth", petition,aut)){
+        if(responsePostParamAuthJava(contextUrl,"verificaFinger", petition,aut)){
             return json.toString();
         }
         return "";

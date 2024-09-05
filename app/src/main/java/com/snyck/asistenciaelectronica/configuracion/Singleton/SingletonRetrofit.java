@@ -1,6 +1,8 @@
 package com.snyck.asistenciaelectronica.configuracion.Singleton;
 
 import com.snyck.asistenciaelectronica.BuildConfig;
+import com.snyck.asistenciaelectronica.configuracion.Logg.Logg;
+import com.snyck.asistenciaelectronica.configuracion.Logg.Test;
 import com.snyck.asistenciaelectronica.configuracion.Services.ServiceInterface;
 
 import okhttp3.OkHttpClient;
@@ -31,6 +33,30 @@ public class SingletonRetrofit {
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(SERVER_URL + contexturl)
+                    .build();
+        }
+        return retrofit.create(ServiceInterface.class);
+    }
+
+    public static ServiceInterface getInstanceJava(String contextURL){
+        String contexturl = null;
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+        if (retrofit == null){
+            contexturl = contextURL;
+            retrofit = new Retrofit.Builder()
+                    .client(httpClient.build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(Logg.DEV_API_URL + contexturl)
+                    .build();
+        }else {
+            contexturl = contextURL;
+            retrofit = new Retrofit.Builder()
+                    .client(httpClient.build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(Logg.DEV_API_URL + contexturl)
                     .build();
         }
         return retrofit.create(ServiceInterface.class);

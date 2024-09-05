@@ -2,6 +2,8 @@ package com.snyck.asistenciaelectronica.configuracion.Logg;
 
 import android.util.Log;
 
+import com.snyck.asistenciaelectronica.BuildConfig;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
@@ -25,6 +27,9 @@ public class Logg {
     public final static int ERROR = 4;
     private static final int DEFAULT_LOG_MAX_FILE_SIZE = 1024;  // 1 MB
     private static final int DEFAULT_LOG_MAX_NUM_LOG_FILES = 5; // 5 archivos
+
+    public static final String PRO_API_URL = BuildConfig.PERSONAL_API_URL;
+    public static final String DEV_API_URL = BuildConfig.SERVICE_API_URL;
 
     public static String PATH;
     public static String PATH_CACHE;

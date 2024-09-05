@@ -103,7 +103,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
-    implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha01'
+    //implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha01'
 
     // Implementation project ----------------------------------------------------------------------
     api project(path: ':uareulibrary')                               //FingerLibrary
